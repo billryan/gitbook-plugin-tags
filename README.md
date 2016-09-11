@@ -1,6 +1,6 @@
 # gitbook-plugin-tags
 
-[![npm](https://img.shields.io/npm/v/gitbook-plugin-etoc.svg?style=plastic)](https://npmjs.org/package/gitbook-plugin-tags) [![npm](https://img.shields.io/npm/dm/gitbook-plugin-tags.svg?style=plastic)](https://npmjs.org/package/gitbook-plugin-tags) [![npm](https://img.shields.io/npm/dt/gitbook-plugin-tags.svg?style=plastic)](https://npmjs.org/package/gitbook-plugin-tags)
+[![npm](https://img.shields.io/npm/v/gitbook-plugin-tags.svg?style=plastic)](https://npmjs.org/package/gitbook-plugin-tags) [![npm](https://img.shields.io/npm/dm/gitbook-plugin-tags.svg?style=plastic)](https://npmjs.org/package/gitbook-plugin-tags) [![npm](https://img.shields.io/npm/dt/gitbook-plugin-tags.svg?style=plastic)](https://npmjs.org/package/gitbook-plugin-tags)
 
 ## Tags for GitBook
 
