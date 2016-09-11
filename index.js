@@ -67,17 +67,16 @@ module.exports = {
       // override tags in markdown page
       page.content = page.content.replace(/[\r\n|\r|\n]\s?tags:\s?\[?(.*?)\]?[\r\n|\r|\n]/ig, '');
       // replace tags info from page and YAML
-      page.content = page.content.replace(/^#\s?(.*?)[\r\n|\r|\n]/ig, '# ' + page_title + eol + tags_md + eol);
+      var title_tags = ''.concat('# ', page_title, eol, '<!-- tags -->', tags_md, eol, '<!-- tagsstop -->', eol);
+      page.content = page.content.replace(/^#\s?(.*?)[\r\n|\r|\n]/ig, title_tags);
 
       return page;
     },
 
     "page": function(page) {
+      page.content = page.content.replace('<!-- tags -->', '<!-- tags --><div id="tags" class="tags">');
+      page.content = page.content.replace('<!-- tagsstop -->', '</div><!-- tagsstop -->');
       return page;
-    },
-
-    "finish": function() {
-
     }
   }
 };
