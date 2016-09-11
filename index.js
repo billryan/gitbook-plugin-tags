@@ -1,4 +1,4 @@
-var urls = [];
+var urls = {};
 
 module.exports = {
   book: {
@@ -8,8 +8,9 @@ module.exports = {
     ]
   },
   hooks: {
-    "page:before": function (page) {
+    "page:before": function(page) {
       if (this.output.name != 'website') return page;
+
       if (page.tags) {
         // extract from YAML
         var rawtags = page.tags;
@@ -19,7 +20,10 @@ module.exports = {
         if (!_tag_exist) return page;
         var rawtags = _tag_exist[1].replace(/['"]+/g, '');
       }
-      console.log('' + rawtags);
+      // process both YAML and RegExp string
+      rawtags = '' + rawtags;
+      tags = rawtags.split(',').map(function(e) {return e.trim();})
+      console.log(tags);
       var lang = this.isLanguageBook()? this.language : '';
       if (lang) lang = lang + '/';
       console.log('path: ' + lang + page.path);
@@ -32,13 +36,13 @@ module.exports = {
       return page;
     },
 
-    "page": function (page) {
+    "page": function(page) {
       if (page.tags) console.log('tags in YAML' + page.tags);
       console.log(this.output.toURL(page.path));
       return page;
     },
 
-    "finish": function () {
+    "finish": function() {
 
     }
   }
