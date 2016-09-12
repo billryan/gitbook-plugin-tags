@@ -62,7 +62,7 @@ module.exports = {
       tags.forEach(function(e) {
         tags_md_.push('[' + e + ']' + '(' + lang + 'tags.html#' + slug(e) + ')');
       })
-      var tags_md = eol + 'tags: ' + tags_md_.join(', ') + eol;
+      var tags_md = eol + 'Tags: ' + tags_md_.join(', ') + eol;
 
       // override tags in markdown page
       page.content = page.content.replace(/[\r\n|\r|\n]\s?tags:\s?\[?(.*?)\]?[\r\n|\r|\n]/ig, '');
