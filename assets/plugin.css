@@ -8,7 +8,8 @@
     border-radius:  3px;
     border:         2px solid #25a1f0;
     cursor:         pointer;
-    padding:        4px 8px;
+    padding:        2px 8px;
+    margin:         0px 2px;
 }
 
 .tags a:hover{
