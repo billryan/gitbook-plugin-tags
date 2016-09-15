@@ -39,16 +39,21 @@ module.exports = {
         rawtags = page.tags;
       } else {
         // extract from page
-        var _tag_exist = page.content.match(/[\r\n|\r|\n]\s*tags:\s*\[?(.*?)\]?[\r\n|\r|\n]/i);
+        var _tag_exist = page.content.match(/[\r\n]\s*tags:\s*\[*(.*?)\]*[\r\n]/i);
         if (!_tag_exist) return page;
-        rawtags = _tag_exist[1].replace(/['"]+/g, '');
+        rawtags = _tag_exist[1];
       }
+
       // process both YAML and RegExp string
-      rawtags = '' + rawtags;
-      var tags = rawtags.split(',').map(function(e) {if (e.trim()) return e.trim();});
+      rawtags = ('' + rawtags).split(',');
+      var tags = [];
+      rawtags.forEach(function(e) {
+        var tags_ = e.match(/^\s*['"]*\s*(.*?)\s*['"]*\s*$/)[1];
+        if (tags_) tags.push(tags_);
+      })
 
       // push to tags_map
-      var page_title = page.content.match(/^#\s?(.*?)[\r\n|\r|\n]/)[1];
+      var page_title = page.content.match(/^#\s*(.*?)[\r\n|\r|\n]/)[1];
       tags.forEach(function(e) {
         if (!tags_map[e]) tags_map[e] = [];
         tags_map[e].push({
