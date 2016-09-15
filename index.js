@@ -13,11 +13,6 @@ module.exports = {
     "page:before": function(page) {
       if (this.output.name != 'website') return page;
 
-      // get page path
-      var lang = this.isLanguageBook()? this.language : '';
-      if (lang) lang = lang + '/';
-      var page_path = this.output.toURL(lang + page.path);
-
       if (page.path === 'tags.md') {
         for (var key in tags_map) {
           if (tags_map.hasOwnProperty(key)) {
@@ -30,6 +25,7 @@ module.exports = {
             page.content = page.content.concat(eol);
           }
         }
+        return page;
       }
 
       // extract tags from page or YAML
@@ -53,11 +49,12 @@ module.exports = {
       })
 
       // push to tags_map
-      var page_title = page.content.match(/^#\s*(.*?)[\r\n|\r|\n]/)[1];
+      var page_title = page.content.match(/^#\s*(.*?)[\r\n]/)[1];
+      var page_url = this.output.toURL(page.path);
       tags.forEach(function(e) {
         if (!tags_map[e]) tags_map[e] = [];
         tags_map[e].push({
-          url: page_path,
+          url: page_url,
           title: page_title
         });
       })
@@ -65,15 +62,15 @@ module.exports = {
       // generate tags for markdown
       var tags_md_ = [];
       tags.forEach(function(e) {
-        tags_md_.push('[' + e + ']' + '(' + lang + 'tags.html#' + slug(e) + ')');
+        tags_md_.push('[' + e + ']' + '(' + '/tags.html#' + slug(e) + ')');
       })
       var tags_md = eol + '<i class="fa fa-tags" aria-hidden="true"></i> ' + tags_md_.join(' ') + eol;
 
       // override tags in markdown page
-      page.content = page.content.replace(/[\r\n|\r|\n]\s?tags:\s?\[?(.*?)\]?[\r\n|\r|\n]/i, '');
+      page.content = page.content.replace(/[\r\n]\s?tags:\s?\[?(.*?)\]?[\r\n]/i, '');
       // replace tags info from page and YAML
       var title_tags = ''.concat('# ', page_title, eol, '<!-- tags -->', tags_md, eol, '<!-- tagsstop -->', eol);
-      page.content = page.content.replace(/^#\s*(.*?)[\r\n|\r|\n]/, title_tags);
+      page.content = page.content.replace(/^#\s*(.*?)[\r\n]/, title_tags);
 
       return page;
     },
