@@ -16,10 +16,10 @@ module.exports = {
       if (page.path === 'tags.md') {
         for (var key in tags_map) {
           if (tags_map.hasOwnProperty(key)) {
-            var tag_header = ''.concat(eol, '## ', key, eol);
+            var tag_header = eol.concat('## ', key, eol);
             page.content = page.content.concat(tag_header);
             tags_map[key].forEach(function(e) {
-              var tag_body = ''.concat(eol, '- ', '[', e.title, ']', '(', e.url, ')');
+              var tag_body = eol.concat('- ', '[', e.title, ']', '(', e.url, ')');
               page.content = page.content.concat(tag_body);
             })
             page.content = page.content.concat(eol);
@@ -35,6 +35,7 @@ module.exports = {
         rawtags = page.tags;
       } else {
         // extract from page
+        page.content = page.content.concat(eol);  // prevent no end of line
         var _tag_exist = page.content.match(/[\r\n]\s*tags:\s*\[*(.*?)\]*[\r\n]/i);
         if (!_tag_exist) return page;
         rawtags = _tag_exist[1];
@@ -67,9 +68,9 @@ module.exports = {
       var tags_md = eol + '<i class="fa fa-tags" aria-hidden="true"></i> ' + tags_md_.join(' ') + eol;
 
       // override tags in markdown page
-      page.content = page.content.replace(/[\r\n]\s?tags:\s?\[?(.*?)\]?[\r\n]/i, '');
+      page.content = page.content.replace(/[\r\n]\s?tags:\s?\[?(.*?)\]?[\r\n]/i, eol);
       // replace tags info from page and YAML
-      var title_tags = ''.concat('# ', page_title, eol, '<!-- tags -->', tags_md, eol, '<!-- tagsstop -->', eol);
+      var title_tags = '# '.concat(page_title, eol, '<!-- tags -->', tags_md, eol, '<!-- tagsstop -->', eol);
       page.content = page.content.replace(/^#\s*(.*?)[\r\n]/, title_tags);
 
       return page;
