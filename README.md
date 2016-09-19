@@ -42,6 +42,18 @@ tags: tag1, tag2, tag3 is here
 ```
 tags are separated by comma.
 
+### config placement
+
+Tags will show after the title by default, you can config the placement in the bottom.
+
+```
+    "pluginsConfig": {
+        "tags": {
+            "placement": "bottom"
+        }
+    }
+```
+
 Demo website ==> https://yuanbin.gitbooks.io/test/content/
 
 Enjoy!
