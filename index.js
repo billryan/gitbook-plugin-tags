@@ -70,7 +70,12 @@ module.exports = {
       page.content = page.content.replace(/^\s?tags:\s?\[?(.*?)\]?$/im, eol);
       // replace tags info from page and YAML
       var tags_format = eol.concat('<!-- tags -->', tags_md, eol, '<!-- tagsstop -->', eol);
-      page.content = page.content.replace(/^#\s*(.*?)$/m, '# $1' + tags_format);
+      var placement = this.config.get('pluginsConfig.tags.placement') || 'top';
+      if (placement === 'bottom') {
+        page.content = page.content.concat(tags_format);
+      } else {
+        page.content = page.content.replace(/^#\s*(.*?)$/m, '# $1' + tags_format);
+      }
 
       return page;
     },
