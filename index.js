@@ -59,31 +59,42 @@ module.exports = {
         });
       })
 
-      // generate tags for markdown
-      var tags_md_ = [];
+      // generate tags before html
+      var tags_before_ = [];
       tags.forEach(function(e) {
-        tags_md_.push('[' + e + ']' + '(' + '/tags.html#' + slug(e) + ')');
+        if (page.type === 'markdown') {
+          tags_before_.push('[' + e + ']' + '(' + '/tags.html#' + slug(e) + ')');
+        } else {
+          tags_before_.push('link:/tags.html#' + slug(e) + '[' + e + ']');
+        }
       })
-      var tags_md = eol + '<i class="fa fa-tags" aria-hidden="true"></i> ' + tags_md_.join(' ') + eol;
+      if (page.type === 'markdown') {
+        var tags_before = eol + '<i class="fa fa-tags" aria-hidden="true"></i> ' + tags_before_.join(' ') + eol;
+      } else {
+        var tags_before = eol + '*Tags:* ' + tags_before_.join(' ') + eol;
+      }
 
-      // override tags in markdown page
+      // override raw tags in page
       page.content = page.content.replace(/^\s?tags:\s?\[?(.*?)\]?$/im, eol);
       // replace tags info from page and YAML
-      var tags_format = eol.concat('<!-- tags -->', tags_md, eol, '<!-- tagsstop -->', eol);
+      var tags_format = eol.concat(eol, 'tagsstart', eol, tags_before, eol, 'tagsstop', eol);
       var placement = this.config.get('pluginsConfig.tags.placement') || 'top';
       if (placement === 'bottom') {
         page.content = page.content.concat(tags_format);
       } else {
-        page.content = page.content.replace(/^#\s*(.*?)$/m, '# $1' + tags_format);
+        if (page.type === 'markdown') {
+          page.content = page.content.replace(/^#\s*(.*?)$/m, '# $1' + tags_format);
+        } else {
+          page.content = page.content.replace(/^=\s*(.*?)$/m, '= $1' + tags_format);
+        }
       }
-
       return page;
     },
 
     "page": function(page) {
       // add tags id and class
-      page.content = page.content.replace('<!-- tags -->', '<!-- tags --><div id="tags" class="tags">');
-      page.content = page.content.replace('<!-- tagsstop -->', '</div><!-- tagsstop -->');
+      page.content = page.content.replace(/(<div class="paragraph">)?\s*<p>tagsstart<\/p>\s*(<\/div>)?/, '<!-- tags --><div id="tags" class="tags">');
+      page.content = page.content.replace(/(<div class="paragraph">)?\s*<p>tagsstop<\/p>\s*(<\/div>)?/, '</div><!-- tagsstop -->');
       return page;
     }
   }
