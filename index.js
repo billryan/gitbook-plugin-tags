@@ -71,7 +71,7 @@ module.exports = {
       if (page.type === 'markdown') {
         var tags_before = eol + '<i class="fa fa-tags" aria-hidden="true"></i> ' + tags_before_.join(' ') + eol;
       } else {
-        var tags_before = eol + '*Tags:* ' + tags_before_.join(' ') + eol;
+        var tags_before = eol + '*ADOCTAGS* ' + tags_before_.join(' ') + eol;
       }
 
       // override raw tags in page
@@ -95,6 +95,7 @@ module.exports = {
       // add tags id and class
       page.content = page.content.replace(/(<div class="paragraph">)?\s*<p>tagsstart<\/p>\s*(<\/div>)?/, '<!-- tags --><div id="tags" class="tags">');
       page.content = page.content.replace(/(<div class="paragraph">)?\s*<p>tagsstop<\/p>\s*(<\/div>)?/, '</div><!-- tagsstop -->');
+      page.content = page.content.replace('<strong>ADOCTAGS</strong>', '<i class="fa fa-tags" aria-hidden="true"></i> ');
       return page;
     }
   }
