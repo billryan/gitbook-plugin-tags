@@ -1,7 +1,7 @@
 {
     "name": "gitbook-plugin-tags",
     "description": "Add tags to GitBook",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "engines": {
         "gitbook": "*"
     },
