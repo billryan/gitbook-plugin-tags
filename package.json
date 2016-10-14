@@ -1,11 +1,14 @@
 {
     "name": "gitbook-plugin-tags",
     "description": "Add tags to GitBook",
-    "version": "1.4.1",
+    "version": "1.5.0",
     "engines": {
         "gitbook": "*"
     },
     "homepage": "https://github.com/billryan/gitbook-plugin-tags",
+    "dependencies": {
+      "github-slugid": "^1.0.1"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/billryan/gitbook-plugin-tags.git"
