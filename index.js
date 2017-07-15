@@ -83,9 +83,9 @@ module.exports = {
         page.content = page.content.concat(tags_format);
       } else {
         if (page.type === 'markdown') {
-          page.content = page.content.replace(/^#\s*(.*?)$/m, '# $1' + tags_format);
+          page.content = page.content.replace(/^#\s*(.*?)$/m, '#$1' + tags_format);
         } else {
-          page.content = page.content.replace(/^=\s*(.*?)$/m, '= $1' + tags_format);
+          page.content = page.content.replace(/^=\s*(.*?)$/m, '=$1' + tags_format);
         }
       }
       return page;
