@@ -50,11 +50,10 @@ module.exports = {
       })
 
       // push to tags_map
-      var page_url = this.output.toURL(page.path);
       tags.forEach(function(e) {
         if (!tags_map[e]) tags_map[e] = [];
         tags_map[e].push({
-          url: page_url,
+          url: page.path,
           title: page.title
         });
       })
